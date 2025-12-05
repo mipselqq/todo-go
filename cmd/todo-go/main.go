@@ -20,8 +20,9 @@ import (
 func main() {
 	mux := http.NewServeMux()
 	logger := slog.Default()
-	app_config, err := config.FromEnv(); if err != nil {
-		logger.Error("Failed to load app config with", "error", err);
+	app_config, err := config.FromEnv()
+	if err != nil {
+		logger.Error("Failed to load app config with", "error", err)
 		os.Exit(0)
 	}
 
