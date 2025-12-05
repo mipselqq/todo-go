@@ -7,6 +7,7 @@ import (
 	"os"
 
 	_ "todo-go/docs/swagger"
+	"todo-go/internal/config"
 	"todo-go/internal/handlers"
 
 	httpSwagger "github.com/swaggo/http-swagger"
@@ -19,15 +20,22 @@ import (
 func main() {
 	mux := http.NewServeMux()
 	logger := slog.Default()
+	app_config, err := config.FromEnv(); if err != nil {
+		logger.Error("Failed to load app config with", "error", err);
+		os.Exit(0)
+	}
+
+	fmt.Println(app_config)
 
 	mux.HandleFunc("/healthcheck", handlers.HealthCheckHandler)
 	mux.HandleFunc("/swagger/", httpSwagger.Handler())
 
-	appAddress := "localhost:8000"
-	httpAppAddress := fmt.Sprintf("http://%s", appAddress)
-	logger.Info("Starting to listen at", "address", httpAppAddress)
-	if err := http.ListenAndServe(appAddress, mux); err != nil {
-		logger.Error("Failed to listen", "address", appAddress, "error", err)
+	address := app_config.Address()
+	http_address := "https://" + address
+
+	logger.Info("Starting to listen at", "address", http_address)
+	if err := http.ListenAndServe(address, mux); err != nil {
+		logger.Error("Failed to listen", "address", address, "error", err)
 		os.Exit(1)
 	}
 }

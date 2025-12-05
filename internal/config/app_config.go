@@ -30,6 +30,10 @@ func FromEnv() (Config, error) {
     }, nil
 }
 
+func (c Config) Address() string {
+    return fmt.Sprintf("%s:%d", c.host, c.port)
+}
+
 func (c Config) Host() string {
 	return c.host
 }
