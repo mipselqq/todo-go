@@ -1,0 +1,7 @@
+info:
+  contact: {}
+  description: Simple Todo API
+  title: Todo API
+  version: "1.0"
+paths: {}
+swagger: "2.0"

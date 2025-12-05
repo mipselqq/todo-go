@@ -1,3 +1,6 @@
+// @title Todo API
+// @version 1.0
+// @description Simple Todo API
 package main
 
 import (
@@ -11,6 +14,11 @@ func main() {
 	mux := http.NewServeMux()
 	logger := slog.Default()
 
+	// GET /healthcheck
+	// @Summary Health Check
+	// @Description Returns OK if service is up
+	// @Success 200
+	// @Router /healthcheck [get]
 	mux.HandleFunc("GET /healthcheck", func(w http.ResponseWriter, _ *http.Request) {
 		w.WriteHeader(http.StatusOK)
 	})
