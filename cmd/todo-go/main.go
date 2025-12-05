@@ -7,6 +7,7 @@ import (
 	"os"
 
 	_ "todo-go/docs/swagger"
+	"todo-go/internal/handlers"
 
 	httpSwagger "github.com/swaggo/http-swagger"
 )
@@ -19,7 +20,7 @@ func main() {
 	mux := http.NewServeMux()
 	logger := slog.Default()
 
-	mux.HandleFunc("/healthcheck", healthCheckHandler)
+	mux.HandleFunc("/healthcheck", handlers.HealthCheckHandler)
 	mux.HandleFunc("/swagger/", httpSwagger.Handler())
 
 	appAddress := "localhost:8000"
@@ -31,12 +32,3 @@ func main() {
 	}
 }
 
-// healthCheckHandler godoc
-// @Summary Health Check
-// @Description Returns OK if service is up
-// @Tags health
-// @Success 200
-// @Router /healthcheck [get]
-func healthCheckHandler(w http.ResponseWriter, _ *http.Request) {
-	w.WriteHeader(http.StatusOK)
-}
